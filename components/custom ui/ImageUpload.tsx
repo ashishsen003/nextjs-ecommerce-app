@@ -18,13 +18,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onChange(result.info.secure_url);
   };
 
-  console.log(value);
-
   return (
     <div>
       <div className="mb-4 flex flex-wrap gap-4 items-center">
-        {value.map((url) => (
-          <div className="relative w-[150px] h-[150px] ">
+        {value.map((url, i) => (
+          <div className="relative w-[150px] h-[150px]" key={i}>
             <div className="absolute top-2 right-2 z-10">
               <Button onClick={() => onRemove(url)} size="sm" className="bg-red-500 text-white">
                 <X className="h-2 w-2" />

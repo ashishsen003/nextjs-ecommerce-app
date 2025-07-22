@@ -24,6 +24,7 @@ const colletionSchema = new mongoose.Schema(
   }
 );
 
-const Collection = mongoose.models.Collection || mongoose.model("Collection", colletionSchema)
-
+const Collection =
+  mongoose.models.Collection || mongoose.model("Collection", colletionSchema);
+  
 export default Collection;
