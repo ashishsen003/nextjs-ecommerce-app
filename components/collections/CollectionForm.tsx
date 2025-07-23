@@ -52,7 +52,7 @@ const CollectionForm = () => {
       if(res.ok){
         setLoading(true);
         toast.success("Collection created");
-        router.push("/collection");
+        router.push("/collections");
       }
     } catch (error) {
       console.log("[collection_POST]", error);
