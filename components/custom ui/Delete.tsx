@@ -16,6 +16,7 @@ import toast from "react-hot-toast";
 
 interface DeleteProps {
   id: string;
+  item:string;
 }
 
 const Delete: React.FC<DeleteProps> = ({ id }) => {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import dbConnect, from "@/lib/mongoDB";
+import dbConnect from "@/lib/mongoDB";
 import Product from "@/lib/models/Product";
 import Collection from "@/lib/models/Collection";
 import { auth } from "@clerk/nextjs/server";
@@ -73,7 +73,7 @@ export const GET = async (req: NextRequest) => {
     const products = await Product.find()
       .sort({ createdAt: "desc" })
       .populate({ path: "collections", model: Collection });
-
+      
     return NextResponse.json(products, { status: 200 });
   } catch (err) {
     console.log("[products_GET]", err);
