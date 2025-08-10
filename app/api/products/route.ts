@@ -49,15 +49,23 @@ export const POST = async (req: NextRequest) => {
 
     await newProduct.save();
 
-    // if (collections) {
-    //   for (const collectionId of collections) {
-    //     const collection = await Collection.findById(collectionId);
-    //     if (collection) {
-    //       collection.products.push(newProduct._id);
-    //       await collection.save();
-    //     }
-    //   }
-    // }
+    console.log("collections", collections);
+
+    if (collections) {
+      for (const collectionId of collections) {
+        console.log("collectionId", collectionId);
+
+        const collection = await Collection.findById(collectionId);
+        console.log("collection", collection);
+
+        if (collection) {
+          console.log("collection product", collection.products);
+
+          collection.products?.push(newProduct._id);
+          await collection.save();
+        }
+      }
+    }
 
     return NextResponse.json(newProduct, { status: 200 });
   } catch (err) {
@@ -73,7 +81,7 @@ export const GET = async (req: NextRequest) => {
     const products = await Product.find()
       .sort({ createdAt: "desc" })
       .populate({ path: "collections", model: Collection });
-      
+
     return NextResponse.json(products, { status: 200 });
   } catch (err) {
     console.log("[products_GET]", err);

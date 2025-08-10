@@ -12,7 +12,7 @@ const colletionSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    product: [
+    products: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Product",
