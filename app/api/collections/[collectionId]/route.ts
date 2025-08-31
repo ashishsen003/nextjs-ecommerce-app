@@ -10,7 +10,6 @@ export const DELETE = async (
 ) => {
   try {
     const { userId } = auth();
-    console.log(auth());
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
@@ -58,7 +57,7 @@ export const GET = async(req: NextRequest, {params}:{params:{collectionId:string
     try {
         await dbConnect()
 
-        const collection = await Collection.findById(params.collectionId)
+    const collection = await Collection.findById(params.collectionId).populate({ path: "products", model: Product });
         if(!collection) {
             return new NextResponse(JSON.stringify({message: "Collection not found"}), { status: 404 });
         }
@@ -69,3 +68,5 @@ export const GET = async(req: NextRequest, {params}:{params:{collectionId:string
         return new NextResponse("Internal Server Error", { status: 500 });  
     }
 }
+
+export const dynamic = "force-dynamic";

@@ -10,8 +10,6 @@ const CollectionDetails = ({
   params: { collectionId: string };
 }) => {
 
-  console.log(params);
-  
   const [loading, setLoading] = useState(true);
   const [collectionDetails, setCollectionDetails] =
     useState<CollectionType | null>(null);
@@ -23,8 +21,6 @@ const CollectionDetails = ({
       });
       const data = await res.json();
 
-      console.log(data);
-      
       setCollectionDetails(data);
       setLoading(false);
     } catch (error) {
@@ -35,8 +31,6 @@ const CollectionDetails = ({
   useEffect(() => {
     getCollectionDetails();
   }, []);
-
-console.log(loading);
 
   return loading ? <Loader /> : <div>
     <CollectionForm

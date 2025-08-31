@@ -49,18 +49,12 @@ export const POST = async (req: NextRequest) => {
 
     await newProduct.save();
 
-    console.log("collections", collections);
 
     if (collections) {
       for (const collectionId of collections) {
-        console.log("collectionId", collectionId);
 
         const collection = await Collection.findById(collectionId);
-        console.log("collection", collection);
-
         if (collection) {
-          console.log("collection product", collection.products);
-
           collection.products?.push(newProduct._id);
           await collection.save();
         }

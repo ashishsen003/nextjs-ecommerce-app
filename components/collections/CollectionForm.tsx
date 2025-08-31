@@ -35,9 +35,6 @@ interface CollectionFormProps {
 
 const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
 
-  console.log(initialData);
-  
-
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,7 +47,6 @@ const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
 
     try {
 
