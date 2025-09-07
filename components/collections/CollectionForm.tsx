@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
-import ImageUpload from "../custom ui/ImageUpload";
+import SingleImageUpload from "../custom ui/SingleImageUpload";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useState } from "react";
@@ -121,8 +121,8 @@ const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
               <FormItem>
                 <FormLabel>Image</FormLabel>
                 <FormControl>
-                  <ImageUpload
-                    value={field.value ? [field.value] : []}
+                  <SingleImageUpload
+                    value={field.value || ""}
                     onChange={(url) => field.onChange(url)}
                     onRemove={() => field.onChange("")}
                   />

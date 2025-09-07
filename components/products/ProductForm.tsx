@@ -181,13 +181,45 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                 <FormLabel>Image</FormLabel>
                 <FormControl>
                   <ImageUpload
-                    value={field.value}
-                    onChange={(url) => field.onChange([...field.value, url])}
-                    onRemove={(url) =>
-                      field.onChange([
-                        ...field.value.filter((image) => image !== url),
-                      ])
-                    }
+                    value={(() => {
+                      const currentValue = Array.isArray(field.value) ? field.value : [];
+                      console.log("🔵 FIELD VALUE being passed to ImageUpload:", currentValue);
+                      console.log("🔵 FIELD VALUE length:", currentValue.length);
+                      return currentValue;
+                    })()}
+                    onChange={(urls) => {
+                      console.log("🟠 ProductForm onChange START");
+                      console.log("🟠 ProductForm onChange received:", urls);
+                      console.log("🟠 ProductForm onChange array length:", urls.length);
+                      
+                      // Get the current form state
+                      const currentFormMedia = form.getValues("media");
+                      console.log("🟠 Current form media before update:", currentFormMedia);
+                      
+                      // If we receive only 1 URL but form already has images, merge them
+                      let finalUrls = urls;
+                      if (urls.length === 1 && currentFormMedia.length > 0) {
+                        const newUrl = urls[0];
+                        // Check if this URL already exists to avoid duplicates
+                        if (!currentFormMedia.includes(newUrl)) {
+                          finalUrls = [...currentFormMedia, newUrl];
+                          console.log("🟠 Merged with existing images:", finalUrls);
+                        } else {
+                          finalUrls = currentFormMedia;
+                          console.log("🟠 URL already exists, keeping current state:", finalUrls);
+                        }
+                      }
+                      
+                      console.log("🟠 About to call field.onChange with:", finalUrls);
+                      field.onChange(finalUrls);
+                      console.log("🟠 Current form media after update:", form.getValues("media"));
+                      console.log("🟠 ProductForm onChange END");
+                    }}
+                    onRemove={(url) => {
+                      const currentValue = Array.isArray(field.value) ? field.value : [];
+                      const newValue = currentValue.filter((image) => image !== url);
+                      field.onChange(newValue);
+                    }}
                   />
                 </FormControl>
                 <FormMessage className="text-red-1" />
