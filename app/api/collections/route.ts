@@ -1,7 +1,6 @@
 import Collection from "@/lib/models/Collection";
 import dbConnect from "@/lib/mongoDB";
 import { auth } from "@clerk/nextjs/server";
-import { log } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST =  async(req: NextRequest)=>{
@@ -39,7 +38,7 @@ export const POST =  async(req: NextRequest)=>{
   }
 };
 
-export const GET = async(req:NextRequest)=>{
+export const GET = async () => {
   try {
     await dbConnect();
     const collections = await Collection.find().sort({createdAt:"desc"})
@@ -49,3 +48,5 @@ export const GET = async(req:NextRequest)=>{
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+
+export const dynamic = 'force-dynamic';

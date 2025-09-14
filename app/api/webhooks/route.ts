@@ -3,6 +3,7 @@ import { stripe } from "@/lib/stripe";
 import Order from "@/lib/models/Order";
 import Customer from "@/lib/models/Customer";
 import dbConnect from "@/lib/mongoDB";
+import Stripe from "stripe";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -39,12 +40,19 @@ export const POST = async (req: NextRequest) => {
 
       const lineItems = retrieveSession?.line_items?.data
 
-      const orderItems = lineItems?.map((item: any) => {
+      const orderItems = lineItems?.map((item: Stripe.LineItem) => {
+        const product = item.price?.product as Stripe.Product & {
+          metadata: {
+            productId?: string;
+            color?: string;
+            size?: string;
+          };
+        };
         return {
-          product: item.price.product.metadata.productId,
-          color: item.price.product.metadata.color || "N/A",
-          size: item.price.product.metadata.size || "N/A",
-          quantity: item.quantity,
+          product: product?.metadata?.productId || "",
+          color: product?.metadata?.color || "N/A",
+          size: product?.metadata?.size || "N/A",
+          quantity: item.quantity || 1,
         }
       })
 
@@ -80,3 +88,5 @@ export const POST = async (req: NextRequest) => {
     return new NextResponse("Failed to create the order", { status: 500 })
   }
 }
+
+export const dynamic = "force-dynamic";

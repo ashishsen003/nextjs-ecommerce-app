@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Collections = () => {
-  const [loading, setLoading] = useState(true);
   const [collections, setCollections] = useState([]);
   const router = useRouter();
 
@@ -17,7 +16,6 @@ const Collections = () => {
       const res = await fetch("/api/collections");
       const data = await res.json();
       setCollections(data);
-      setLoading(false);
     } catch (error) {
       console.log("[collections_GET]", error);
     }

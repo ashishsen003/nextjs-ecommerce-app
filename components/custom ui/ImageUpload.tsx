@@ -4,7 +4,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { Button } from "../ui/button";
 import { Plus, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 
 interface ImageUploadProps {
   value: string[];
@@ -19,8 +19,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 }) => {
   
   // Use a stable component ID that doesn't change on re-renders
-  const componentIdRef = useRef(Math.random().toString(36).substr(2, 9));
-  const componentId = componentIdRef.current;
   
   // Track if this component is currently uploading to prevent conflicts
   const [isUploading, setIsUploading] = useState(false);
@@ -28,13 +26,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   // Ensure value is always an array
   const safeValue = Array.isArray(value) ? value : [];
   
-  const onUpload = (result: any) => {
-    setIsUploading(true);
-    // Use the current form value instead of local state to prevent conflicts
-    const newValue = [...safeValue, result.info.secure_url];
-    onChange(newValue);
-    setIsUploading(false);
+  const onUpload = (result: unknown) => {
+    const uploadResult = result as {info?: {secure_url?: string}};
+    if (uploadResult?.info?.secure_url) {
+      setIsUploading(true);
+      // Use the current form value instead of local state to prevent conflicts
+      const newValue = [...safeValue, uploadResult.info.secure_url];
+      onChange(newValue);
+      setIsUploading(false);
+    }
   };
+
+  
 
   console.log(value);
   

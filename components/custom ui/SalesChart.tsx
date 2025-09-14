@@ -2,7 +2,7 @@
 
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts'
 
-const SalesChart = ({ data }: { data: any[] }) => {
+const SalesChart = ({ data }: { data: {name: string, sales: number}[] }) => {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <LineChart className='w-full h-full' data={data} margin={{ top: 5, right:20, bottom: 5, left:0 }}>

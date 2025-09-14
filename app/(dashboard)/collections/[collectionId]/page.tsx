@@ -2,7 +2,7 @@
 
 import CollectionForm from "@/components/collections/CollectionForm";
 import Loader from "@/components/custom ui/Loader";
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CollectionDetails = ({
   params,

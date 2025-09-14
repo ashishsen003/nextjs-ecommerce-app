@@ -53,7 +53,7 @@ export const POST = async (req: NextRequest,{params}: {params: {collectionId:str
   }
 }
 
-export const GET = async(req: NextRequest, {params}:{params:{collectionId:string}}) => {
+export const GET = async({params}:{params:{collectionId:string}}) => {
     try {
         await dbConnect()
 

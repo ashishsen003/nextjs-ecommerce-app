@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,7 +19,6 @@ import { Textarea } from "../ui/textarea";
 import SingleImageUpload from "../custom ui/SingleImageUpload";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useState } from "react";
 import Delete from "../custom ui/Delete";
 
 const formSchema = z.object({
@@ -35,7 +33,6 @@ interface CollectionFormProps {
 
 const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
 
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,7 +53,6 @@ const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
         body: JSON.stringify(values),
       })
       if(res.ok){
-        setLoading(true);
         toast.success(`Collection ${initialData ? "updated" : "created"}`);
         window.location.href="/collections";
         router.push("/collections");
@@ -142,4 +138,3 @@ const CollectionForm:React.FC<CollectionFormProps> = ({initialData}) => {
 };
 
 export default CollectionForm;
-("");

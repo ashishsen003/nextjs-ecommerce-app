@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         { shipping_rate: "shr_1S1sGlFOwRPTyh0wBICc8jgM" },
         { shipping_rate: "shr_1S1s9iFOwRPTyh0wZPOP2k0t" },
       ],
-      line_items: cartItems.map((cartItem: any) => ({
+      line_items: cartItems.map((cartItem: {item: ProductType, size?: string, color?: string, quantity: number}) => ({
         price_data: {
           currency: "INR",
           product_data: {
@@ -55,3 +55,5 @@ export async function POST(req: NextRequest) {
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+
+export const dynamic = "force-dynamic";
